@@ -1,0 +1,6 @@
+version: "3"
+services:
+  web:
+    image: ajayk63/node-app-batch-6:latest 
+    ports:
+      - "8000:8000"
