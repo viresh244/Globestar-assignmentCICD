@@ -30,21 +30,21 @@ pipeline {
         }
         stage("Build & Test"){
             steps{
-                sh 'docker build -t node-app-batch-6:latest .'
+                sh 'docker build -t node-app:latest .'
                 echo "Code Built Successfully"
             }
         }
         stage("Trivy"){
             steps{
-                sh "trivy image node-app-batch-6"
+                sh "trivy image node-app"
             }
         }
         stage("Push to Private Docker Hub Repo"){
             steps{
                 withCredentials([usernamePassword(credentialsId:"DockerHubCreds",passwordVariable:"dockerPass",usernameVariable:"dockerUser")]){
                 sh "docker login -u ${env.dockerUser} -p ${env.dockerPass}"
-                sh "docker tag node-app-batch-6:latest ${env.dockerUser}/node-app-batch-6:latest"
-                sh "docker push ${env.dockerUser}/node-app-batch-6:latest"
+                sh "docker tag node-app-batch-6:latest ${env.dockerUser}/node-app:latest"
+                sh "docker push ${env.dockerUser}/node-app:latest"
                 }
                 
             }
